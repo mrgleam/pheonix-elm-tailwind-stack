@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Browser
 import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (id, src)
+import Html.Attributes exposing (id, src, class)
 
 
 ---- MODEL ----
@@ -36,9 +36,9 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ class "flex flex-col items-center" ]
         [ img [ src "/images/logo.svg", id "elm-logo"] []
-        , h1 [] [ text "Your Elm App is working!" ]
+        , h1 [ class ".text-gray-500" ] [ text "Styled with Tailwind. Your Elm App is working!" ]
         ]
 
 
