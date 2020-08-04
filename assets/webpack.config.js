@@ -9,15 +9,15 @@ module.exports = (env, options) => ({
   optimization: {
     minimizer: [
       new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }),
-      new OptimizeCSSAssetsPlugin({})
-    ]
+      new OptimizeCSSAssetsPlugin({}),
+    ],
   },
   entry: {
-      './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js'))
+    "./js/app.js": ["./js/app.js"].concat(glob.sync("./vendor/**/*.js")),
   },
   output: {
-    filename: 'app.js',
-    path: path.resolve(__dirname, '../priv/static/js')
+    filename: "app.js",
+    path: path.resolve(__dirname, "../priv/static/js"),
   },
   module: {
     rules: [
@@ -25,28 +25,26 @@ module.exports = (env, options) => ({
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.elm$/,
-        exclude: ["/elm-stuff", "/node_modules"],
+        exclude: ["/elm-stuff/", "/node_modules"],
         loader: "elm-webpack-loader",
         options: {
-          debug: true,
-          warn: true,
-          cwd: path.resolve(__dirname, 'elm')
-        }
+          debug: options.mode === "development",
+          cwd: path.resolve(__dirname, "elm"),
+        },
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
-      }
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
     ],
-    noParse: [/.elm$/]
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-    new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
-  ]
+    new MiniCssExtractPlugin({ filename: "../css/app.css" }),
+    new CopyWebpackPlugin([{ from: "static/", to: "../" }]),
+  ],
 });
